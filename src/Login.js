@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Registration from './Registration';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showRegistration, setShowRegistration] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Add login logic here
     console.log('Username:', username);
     console.log('Password:', password);
   };
+const navigate = useNavigate();
+
+  const handleRegistration = () => {
+    setShowRegistration(true);
+    navigate('/registration',{ replace: true });
+  };
 
   return (
+    <div>
+
+{!showRegistration ? (
+    
     <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
@@ -33,10 +45,18 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
-        <button onClick={() => console.log('Navigate to register page')}>Register</button>
+        
+        <div className="form-item">
+      <button type="submit">Login</button>
+      <button type="button" onClick={handleRegistration}>Register</button>
+    </div>
+        
       </form>
       
+    </div>
+    ) : (
+      <Registration />
+    )}
     </div>
   );
 };
