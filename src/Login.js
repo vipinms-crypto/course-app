@@ -1,16 +1,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Registration from './Registration';
+import axios from 'axios'
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showRegistration, setShowRegistration] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     console.log('Username:', username);
     console.log('Password:', password);
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8765/user-service/api/authenticate', {
+        username,
+        password,
+      });
+      localStorage.setItem('token', response.data.token);
+      alert("Login successfull...!");
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('There was an error while lohin:', error);
+    }
+
+
   };
 const navigate = useNavigate();
 

@@ -11,7 +11,7 @@ const Container = styled.div`
   background-color: skyblue;
   font-family: Arial, sans-serif;
 `;
-
+// const cors = require('cors');
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -29,7 +29,14 @@ const Registration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8765/USER-SERVICE/api/register', formData);
+      // axios.use(cors);
+      const response = await axios.post('http://localhost:8765/user-service/api/register', formData,{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      alert("Registration successfull. Please do login with your credentials..!");
+      navigate('/login');
       console.log('Registration successful:', response.data);
     } catch (error) {
       console.error('There was an error registering:', error);
