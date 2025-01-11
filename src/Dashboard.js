@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './Dashboard.css';
+import './Dashboard.css'; 
+import Menu from './Menu';
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
@@ -30,37 +30,40 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Dashboard</h1>
-      {data ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Course Code</th>
-              <th>Course Name</th>
-              <th>Course Description</th>
-              <th>No. Of Modules</th>
-              <th>Course Duration</th>
-              <th>Action</th>
-              {/* Add more headers as needed */}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item) => (
-              <tr key={item.courseId}>
-                <td>{item.courseCode}</td>
-                <td>{item.courseName}</td>
-                <td>{item.courseDescription}</td>
-                <td>{item.courseNoModules}</td>
-                <td>{item.courseDuration}</td>
-                <td><button>View</button></td>
+    <div className="dashboard-container">
+      <Menu/>
+      <div className="main-content">
+        <h1>Dashboard</h1>
+        {data ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Course Description</th>
+                <th>No. Of Modules</th>
+                <th>Course Duration</th>
+                <th>Action</th>
+                {/* Add more headers as needed */}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>Loading...</p>
-      )}
+            </thead>
+            <tbody>
+              {data.map((item) => (
+                <tr key={item.courseId}>
+                  <td>{item.courseCode}</td>
+                  <td>{item.courseName}</td>
+                  <td>{item.courseDescription}</td>
+                  <td>{item.courseNoModules}</td>
+                  <td>{item.courseDuration}</td>
+                  <td><button>View</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
     </div>
   );
 };

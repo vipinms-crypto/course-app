@@ -5,10 +5,14 @@ body {
     background-color: #f4f4f4;
   }
   
-  .container {
-    width: 90%;
-    margin: 0 auto;
+  .dashboard-container {
+    display: flex;
+  }
+   
+  .main-content {
+    margin-left: 250px;
     padding: 20px;
+    width: calc(100% - 250px);
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
@@ -54,15 +58,23 @@ body {
   }
   
   @media (max-width: 600px) {
+    .main-content {
+      margin-left: 0;
+      width: 100%;
+    }
+  
     table, thead, tbody, th, td, tr {
       display: block;
     }
+  
     th {
       display: none;
     }
+  
     tr {
       margin-bottom: 10px;
     }
+  
     td {
       display: flex;
       justify-content: space-between;
@@ -70,6 +82,7 @@ body {
       border: none;
       border-bottom: 1px solid #ddd;
     }
+  
     td::before {
       content: attr(data-label);
       font-weight: bold;
