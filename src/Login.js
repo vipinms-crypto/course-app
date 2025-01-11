@@ -14,12 +14,12 @@ const Login = () => {
     console.log('Password:', password);
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8765/user-service/api/authenticate', {
+      const response = await axios.post('http://localhost:8765/user-service/api/login', {
         username,
         password,
       });
       localStorage.setItem('token', response.data.token);
-      alert("Login successfull...!");
+      localStorage.setItem('userId', response.data.userId);
       navigate('/dashboard');
     } catch (error) {
       console.error('There was an error while lohin:', error);

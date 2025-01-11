@@ -11,7 +11,6 @@ const Container = styled.div`
   background-color: skyblue;
   font-family: Arial, sans-serif;
 `;
-// const cors = require('cors');
 
 const Registration = () => {
   const [formData, setFormData] = useState({
