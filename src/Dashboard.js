@@ -7,20 +7,41 @@ const Dashboard = () => {
   const [data, setData] = useState(null);
   const courseUserId = localStorage.getItem('userId');
 
+  const searchCriteria = {
+    searchObject: {
+      inputType :"Integer",
+      inputKey :"userCourseMappingUserId",
+      inputValue :courseUserId,
+    },
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.post(
-          'http://localhost:8765/courses/search',
-          { courseUserId },
+          'http://localhost:8765/courses/user/mapping/search',
+          searchCriteria,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setData(response.data);
+        let courseDataList = { data: [] };
+        if (response.data  && Array.isArray(response.data) && response.data.length > 0) {
+        const  courseResponse = await axios.post(
+            'http://localhost:8765/courses/search',
+            searchCriteria,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          courseDataList = courseResponse;
+        }
+        setData(courseDataList.data);
       } catch (error) {
         console.error('Failed to fetch data', error);
       }
