@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Registration from './Registration';
 import axios from 'axios'
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showRegistration, setShowRegistration] = useState(false);
@@ -12,7 +12,6 @@ const Login = () => {
     e.preventDefault();
     console.log('Username:', username);
     console.log('Password:', password);
-    e.preventDefault();
     try {
       const response = await axios.post('http://localhost:8765/user-service/api/login', {
         username,
@@ -20,6 +19,7 @@ const Login = () => {
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userId', response.data.userId);
+      onLogin();
       navigate('/dashboard');
     } catch (error) {
       console.error('There was an error while lohin:', error);

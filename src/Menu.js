@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './Menu.css'; 
 
 const Menu = () => {
   return (
     <div className="sidebar">
     <ul>
-      <li><a href="#dashboard">Dashboard</a></li>
-      <li><a href="#courses">Courses</a></li>
-      <li><a href="#profile">Profile</a></li>
-      <li><a href="#settings">Settings</a></li>
-    </ul>
+        <li><Link to="/dashboard">Dashboard</Link></li>
+        <li><Link to="/courses">Courses</Link></li>
+        <li><Link to="/profile">Profile</Link></li>
+        <li><Link to="/settings">Settings</Link></li>
+      </ul>
   </div>
   );
 };

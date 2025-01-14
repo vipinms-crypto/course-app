@@ -1,68 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import axios from 'axios';
-import './css/table-list.css'; 
-import Menu from './Menu';
-import CourseList from './course/components/Courselist.js'
+import '../../css//table-list.css';  
 
-const Dashboard = () => {
+const Courselist = () => {
   const [data, setData] = useState(null);
-  const courseUserId = localStorage.getItem('userId');
 
-  const searchCriteria = {
-    searchObject: {
-      inputType :"Integer",
-      inputKey :"userCourseMappingUserId",
-      inputValue :courseUserId,
-    },
+  const handleEnroll = async (e,courseId ) =>{
+    e.preventDefault();
+    const userId = localStorage.getItem('userId');
+    const userCourseMapping = {
+      userCourseMappingUserId: userId,
+      userCourseMappingCourseId: courseId,
+    };
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post('http://localhost:8765/courses/user/mapping', 
+        userCourseMapping,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );     
+      alert("User successfully enrolled into a new course");
+    } catch (error) {
+      console.error('There was an error while lohin:', error);
+    }
   };
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.post(
-          'http://localhost:8765/courses/user/mapping/search',
-          searchCriteria,
+        const response = await axios.get(
+          'http://localhost:8765/courses',
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        let courseDataList = { data: [] };
-        if (response.data  && Array.isArray(response.data) && response.data.length > 0) {
-        const  courseResponse = await axios.post(
-            'http://localhost:8765/courses/search',
-            searchCriteria,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          courseDataList = courseResponse;
-        }
-        setData(courseDataList.data);
+        
+        setData(response.data);
       } catch (error) {
         console.error('Failed to fetch data', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, 
+  
+  []);
 
   return (
     <div className="dashboard-container">
-      <Menu/>
-      <Routes>
-          <Route path="/dashboard"  />
-          <Route path="/courses" element={<CourseList/>} />
-          <Route path="/profile"  />
-          <Route path="/settings"  />
-        </Routes>
       <div className="main-content">
-        <h1>Dashboard</h1>
+        <h1>Courses</h1>
         {data ? (
           <table>
             <thead>
@@ -84,7 +78,7 @@ const Dashboard = () => {
                   <td>{item.courseDescription}</td>
                   <td>{item.courseNoModules}</td>
                   <td>{item.courseDuration}</td>
-                  <td><button>View</button></td>
+                  <td><button onClick={(e) => handleEnroll(e, item.courseId)}>Enroll</button></td>
                 </tr>
               ))}
             </tbody>
@@ -97,4 +91,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Courselist;
