@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../../css//table-list.css';  
+import '../../css/table-list.css';
 
 const Courselist = () => {
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
 
   const handleEnroll = async (e,courseId ) =>{
     e.preventDefault();
@@ -12,7 +14,7 @@ const Courselist = () => {
       userCourseMappingUserId: userId,
       userCourseMappingCourseId: courseId,
     };
-
+    
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post('http://localhost:8765/courses/user/mapping', 
@@ -25,10 +27,16 @@ const Courselist = () => {
       );     
       alert("User successfully enrolled into a new course");
     } catch (error) {
+      const errorMessage = error.response ? error.response.data.message : error.message;
+      alert(`Error: ${errorMessage}`);
       console.error('There was an error while lohin:', error);
     }
   };
   
+const handleClick = () =>{
+  navigate('/Addcourse');
+}
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -57,6 +65,7 @@ const Courselist = () => {
     <div className="dashboard-container">
       <div className="main-content">
         <h1>Courses</h1>
+        <><button onClick={handleClick}>Add COurse</button></>
         {data ? (
           <table>
             <thead>

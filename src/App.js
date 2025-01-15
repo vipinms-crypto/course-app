@@ -1,18 +1,3 @@
-// import React from 'react';
-// import Login from './Login';
-// import './Login.css';
-
-
-// const App = () => {
-//   return (
-//     <div className="App">
-//       <Login />
-//     </div>
-//   );
-// };
-
-// export default App;
-
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './Login';
@@ -21,6 +6,7 @@ import Dashboard from './Dashboard';
 import Menu from './Menu';
 import './Login.css';
 import CourseList from './course/components/Courselist.js'
+import AddCourse from './course/components/Addcourse.js';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,6 +28,7 @@ const App = () => {
                 <Route path="/profile"  />
                 <Route path="/settings" />
                 <Route path="*" element={<Navigate to="/dashboard" />} />
+                <Route path="/addcourse" element={<AddCourse/>} />
               </Routes>
             </div>
           </>
