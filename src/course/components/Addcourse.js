@@ -106,6 +106,7 @@ const Addcourse = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log('Response from server :',response);
       alert('Course successfully saved');
     } catch (error) {
       alert(`Error: ${error.response ? error.response.data.message : error.message}`);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import {  Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import './css/table-list.css'; 
 import Menu from './Menu';
@@ -7,17 +7,18 @@ import CourseList from './course/components/Courselist.js'
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
-  const courseUserId = localStorage.getItem('userId');
-
-  const searchCriteria = {
-    searchObject: {
-      inputType :"Integer",
-      inputKey :"userCourseMappingUserId",
-      inputValue :courseUserId,
-    },
-  };
+  
 
   useEffect(() => {
+    const courseUserId = localStorage.getItem('userId');
+    const searchCriteria = {
+      searchObject: {
+        inputType :"Integer",
+        inputKey :"userCourseMappingUserId",
+        inputValue :courseUserId,
+      },
+    };
+
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
