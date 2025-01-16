@@ -1,17 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import './Registration.css'
 import axios from 'axios'
-
-const Container = styled.div`
- padding: 20px;
-  margin: 0 auto;
-  max-width: 60%;
-  background-color: skyblue;
-  font-family: Arial, sans-serif;
-`;
-
 const Registration = () => {
   const [formData, setFormData] = useState({
 

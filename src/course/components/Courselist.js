@@ -25,6 +25,7 @@ const Courselist = () => {
           },
         }
       );     
+      console.log('Response from server :',response)
       alert("User successfully enrolled into a new course");
     } catch (error) {
       const errorMessage = error.response ? error.response.data.message : error.message;
