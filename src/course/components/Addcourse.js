@@ -3,6 +3,7 @@ import '../../css/form.css';
 import axios from 'axios';
 
 const Addcourse = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [courseData, setCourseData] = useState({
     courseName: '',
     courseCode: '',
@@ -101,7 +102,7 @@ const Addcourse = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:8765/courses', courseData, {
+      const response = await axios.post(apiUrl+'/courses', courseData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

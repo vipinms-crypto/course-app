@@ -8,13 +8,13 @@ const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showRegistration, setShowRegistration] = useState(false);
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log('Username:', username);
     console.log('Password:', password);
     try {
-      const response = await axios.post('http://localhost:8765/user-service/api/login', {
+      const response = await axios.post(apiUrl+'/user-service/api/login', {
         username,
         password,
       });

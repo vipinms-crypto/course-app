@@ -6,7 +6,7 @@ import '../../css/table-list.css';
 const Courselist = () => {
   const [data, setData] = useState(null);
   const navigate = useNavigate();
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const handleEnroll = async (e,courseId ) =>{
     e.preventDefault();
     const userId = localStorage.getItem('userId');
@@ -17,7 +17,7 @@ const Courselist = () => {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:8765/courses/user/mapping', 
+      const response = await axios.post(apiUrl+'/courses/user/mapping', 
         userCourseMapping,
         {
           headers: {
@@ -42,8 +42,7 @@ const handleClick = () =>{
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(
-          'http://localhost:8765/courses',
+        const response = await axios.get( apiUrl+'/courses',
           {
             headers: {
               Authorization: `Bearer ${token}`,

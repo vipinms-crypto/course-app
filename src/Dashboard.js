@@ -7,8 +7,6 @@ import CourseList from './course/components/Courselist.js'
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
-  
-
   useEffect(() => {
     const courseUserId = localStorage.getItem('userId');
     const searchCriteria = {
@@ -18,12 +16,11 @@ const Dashboard = () => {
         inputValue :courseUserId,
       },
     };
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.post(
-          'http://localhost:8765/courses/user/mapping/search',
+        const response = await axios.post(apiUrl+'/courses/user/mapping/search',
           searchCriteria,
           {
             headers: {
@@ -33,8 +30,7 @@ const Dashboard = () => {
         );
         let courseDataList = { data: [] };
         if (response.data  && Array.isArray(response.data) && response.data.length > 0) {
-        const  courseResponse = await axios.post(
-            'http://localhost:8765/courses/search',
+        const  courseResponse = await axios.post(apiUrl+'/courses/search',
             searchCriteria,
             {
               headers: {

@@ -14,12 +14,12 @@ const Registration = () => {
       [name]: value
     });
   };
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // axios.use(cors);
-      const response = await axios.post('http://localhost:8765/user-service/api/register', formData,{
+      //axios.use(cors);
+      const response = await axios.post(apiUrl+'/user-service/api/register', formData,{
         headers: {
           'Content-Type': 'application/json',
         }
