@@ -9,7 +9,7 @@ const Addcourse = () => {
     courseDescription: '',
     courseNoModules: 0,
     courseDuration: 0,
-    componentResponseDto: []
+    componentRequestDto: []
   });
 
   const handleChange = (e) => {
@@ -22,61 +22,61 @@ const Addcourse = () => {
 
   const handleComponentChange = (index, e) => {
     const { name, value } = e.target;
-    const components = [...courseData.componentResponseDto];
+    const components = [...courseData.componentRequestDto];
     components[index] = {
       ...components[index],
       [name]: value
     };
     setCourseData({
       ...courseData,
-      componentResponseDto: components
+      componentRequestDto: components
     });
   };
 
   const handleChapterChange = (componentIndex, chapterIndex, e) => {
     const { name, value } = e.target;
-    const components = [...courseData.componentResponseDto];
-    const chapters = [...components[componentIndex].chapterRequestDtos];
+    const components = [...courseData.componentRequestDto];
+    const chapters = [...components[componentIndex].chapterRequestDto];
     chapters[chapterIndex] = {
       ...chapters[chapterIndex],
       [name]: value
     };
-    components[componentIndex].chapterRequestDtos = chapters;
+    components[componentIndex].chapterRequestDto = chapters;
     setCourseData({
       ...courseData,
-      componentResponseDto: components
+      componentRequestDto: components
     });
   };
 
   const addComponent = () => {
     setCourseData({
       ...courseData,
-      componentResponseDto: [
-        ...courseData.componentResponseDto,
+      componentRequestDto: [
+        ...courseData.componentRequestDto,
         {
           componentName: '',
           componentCode: '',
           componentDescription: '',
           componentNoChapters: 0,
           componentDuration: 0,
-          chapterRequestDtos: []
+          chapterRequestDto: []
         }
       ]
     });
   };
 
   const removeComponent = (index) => {
-    const components = [...courseData.componentResponseDto];
+    const components = [...courseData.componentRequestDto];
     components.splice(index, 1);
     setCourseData({
       ...courseData,
-      componentResponseDto: components
+      componentRequestDto: components
     });
   };
 
   const addChapter = (componentIndex) => {
-    const components = [...courseData.componentResponseDto];
-    components[componentIndex].chapterRequestDtos.push({
+    const components = [...courseData.componentRequestDto];
+    components[componentIndex].chapterRequestDto.push({
       chapterName: '',
       chapterCode: '',
       chapterDescription: '',
@@ -84,16 +84,16 @@ const Addcourse = () => {
     });
     setCourseData({
       ...courseData,
-      componentResponseDto: components
+      componentRequestDto: components
     });
   };
 
   const removeChapter = (componentIndex, chapterIndex) => {
-    const components = [...courseData.componentResponseDto];
-    components[componentIndex].chapterRequestDtos.splice(chapterIndex, 1);
+    const components = [...courseData.componentRequestDto];
+    components[componentIndex].chapterRequestDto.splice(chapterIndex, 1);
     setCourseData({
       ...courseData,
-      componentResponseDto: components
+      componentRequestDto: components
     });
   };
 
@@ -144,25 +144,25 @@ const Addcourse = () => {
               <input type="number" name="courseDuration" className="course-input" onChange={handleChange} />
             </div>
           </div>
-          <button type="button" onClick={addComponent}>Add Component</button>
+          <button type="button" onClick={addComponent}>Add Module</button>
         </div>
         
-        {courseData.componentResponseDto.map((component, index) => (
+        {courseData.componentRequestDto.map((component, index) => (
           <div key={index} className="component-block">
-            <h3>Component {index + 1}</h3>
+            <h3>Module {index + 1}</h3>
             <div className="form-row">
               <div>
-                <label>Component Name:</label>
+                <label>Module Name:</label>
                 <input type="text" name="componentName" className="component-input" onChange={(e) => handleComponentChange(index, e)} />
               </div>
               <div>
-                <label>Component Code:</label>
+                <label>Module Code:</label>
                 <input type="text" name="componentCode" className="component-input" onChange={(e) => handleComponentChange(index, e)} />
               </div>
             </div>
             <div className="form-row">
               <div>
-                <label>Component Description:</label>
+                <label>Module Description:</label>
                 <input type="text" name="componentDescription" className="component-input" onChange={(e) => handleComponentChange(index, e)} />
               </div>
               <div>
@@ -172,13 +172,13 @@ const Addcourse = () => {
             </div>
             <div className="form-row">
               <div>
-                <label>Component Duration:</label>
+                <label>Module Duration:</label>
                 <input type="number" name="componentDuration" className="component-input" onChange={(e) => handleComponentChange(index, e)} />
               </div>
             </div>
             <button type="button" onClick={() => addChapter(index)}>Add Chapter</button>
-            <button type="button" onClick={() => removeComponent(index)}>Remove Component</button>
-            {component.chapterRequestDtos.map((chapter, chapterIndex) => (
+            <button type="button" onClick={() => removeComponent(index)}>Remove Module</button>
+            {component.chapterRequestDto.map((chapter, chapterIndex) => (
               <div key={chapterIndex} className="chapter-block">
                 <h4>Chapter {chapterIndex + 1}</h4>
                 <div className="form-row">
